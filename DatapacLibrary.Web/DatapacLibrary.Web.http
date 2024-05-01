@@ -1,0 +1,6 @@
+@DatapacLibrary.Web_HostAddress = http://localhost:5299
+
+GET {{DatapacLibrary.Web_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
