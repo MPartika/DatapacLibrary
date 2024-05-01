@@ -22,8 +22,6 @@ public class DeleteUserValidator : AbstractValidator<DeleteUserCommand>
     public DeleteUserValidator()
     {
         RuleFor(command => command.Id)
-            .NotEmpty()
-            .WithMessage("Missing user's Id")
             .GreaterThan(0)
             .WithMessage("Missing user's Id");
     }

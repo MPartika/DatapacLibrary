@@ -1,6 +1,6 @@
 using System.Reflection;
 using System.Text;
-using DatapacLibrary.ApplicationCore.Validators;
+using DatapacLibrary.ApplicationCore.Decorators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +17,8 @@ public static class ConfigureServices
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(), ServiceLifetime.Transient);
         services.AddMediatR(cfg => 
             cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingResponseBehavior<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationResponseBehavior<,>));
         return services;

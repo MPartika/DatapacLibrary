@@ -1,7 +1,7 @@
 using FluentValidation;
 using MediatR;
 
-namespace DatapacLibrary.ApplicationCore.Validators;
+namespace DatapacLibrary.ApplicationCore.Decorators;
 
 public sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest
