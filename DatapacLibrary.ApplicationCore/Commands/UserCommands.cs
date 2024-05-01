@@ -23,7 +23,7 @@ public class DeleteUserCommand : IRequest
     public int Id { get; set; }
 }
 
-public class AuthorizeUserCommand : IRequest
+public class AuthenticateUserCommand : IRequest<string>
 {
     public required string Name { get; set;}
     public required string Password { get; set;}
