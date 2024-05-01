@@ -15,9 +15,9 @@ internal class UserRepository : IUserRepository
         _dbContext = dbContext;
     }
 
-    public async Task<UserPasswordDto?> FindByNameAsync(string name) => (await _dbContext.Users.FirstOrDefaultAsync(x => x.Name == name))?.ToUserWithPasswordDto();
-    public async Task<IEnumerable<UserDto>> GetAllUsers() => await _dbContext.Users.Select(x => x.ToUserDto()).ToListAsync();
-    public async Task CreateUser(string name, string Email, byte[] password, byte[] salt)
+    public async Task<UserPasswordDto?> GetUserAsync(string name) => (await _dbContext.Users.FirstOrDefaultAsync(x => x.Name == name))?.ToUserWithPasswordDto();
+    public async Task<IEnumerable<UserDto>> GetAllUsersAsync() => await _dbContext.Users.Select(x => x.ToUserDto()).ToListAsync();
+    public async Task CreateUserAsync(string name, string Email, byte[] password, byte[] salt)
     {
         _dbContext.Add(new User
         {
@@ -29,7 +29,7 @@ internal class UserRepository : IUserRepository
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task UpdateUser(int id, string? name, string? email, byte[]? password, byte[]? salt)
+    public async Task UpdateUserAsync(long id, string? name, string? email, byte[]? password, byte[]? salt)
     {
         var user = await _dbContext.Users.SingleAsync(x => x.Id == id);
         if (name is not null && user.Name != name)
@@ -43,7 +43,7 @@ internal class UserRepository : IUserRepository
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task DeleteUser(int id)
+    public async Task DeleteUserAsync(long id)
     {
         var user = await _dbContext.Users.SingleAsync(x => x.Id == id);
         _dbContext.Remove(user);

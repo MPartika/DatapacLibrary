@@ -8,7 +8,7 @@ using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace DatapacLibrary.ApplicationCore;
+namespace DatapacLibrary.ApplicationCore.Handlers;
 
 public class AuthenticateUserHandler : IRequestHandler<AuthenticateUserCommand, string>
 {
@@ -23,16 +23,16 @@ public class AuthenticateUserHandler : IRequestHandler<AuthenticateUserCommand, 
 
     public async Task<string> Handle(AuthenticateUserCommand request, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.FindByNameAsync(request.Name);
+        var user = await _userRepository.GetUserAsync(request.Name);
         if (user == null)
             throw new ArgumentException("User name or password is incorrect!");
         if (!AuthenticationHelper.VerifyPassword(request.Password ,user.Password, user.Salt))
             throw new ArgumentException("User name or password is incorrect!");
 
-        return BuildToken(request.Name);
+        return BuildToken();
     }
 
-    private string BuildToken(string userName)
+    private string BuildToken()
     {
         var issuer = _config["JwtSettings:Issuer"];
         var audience = _config.GetSection("JwtSettings:Audience").Get<string[]>();
@@ -42,11 +42,11 @@ public class AuthenticateUserHandler : IRequestHandler<AuthenticateUserCommand, 
         var key = Encoding.ASCII.GetBytes(keyConfig);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
-            Subject = new ClaimsIdentity(new[]
-            {
+            Subject = new ClaimsIdentity(
+            [
                 new Claim("Id", Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            }),
+            ]),
             Expires = DateTime.UtcNow.AddMinutes(30),
             Issuer = issuer,
             Claims = new Dictionary<string, object> {{JwtRegisteredClaimNames.Aud, audience}},

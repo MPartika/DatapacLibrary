@@ -18,6 +18,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureSwaggerGen();
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -28,19 +29,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseEndpoints(endpoints =>
+{
+    _ = endpoints.MapControllers();
+});
+
+
 
 app.UseHttpsRedirection();
-
-app.MapPost("/authenticate-user", async (IMediator mediat, [FromBody] AuthenticateUserCommand command) => await mediat.Send(command))
-.WithName("Authentication")
-.WithOpenApi();
-
-app.MapGet("/weather-forecast", async (IMediator mediat ) => await mediat.Send(new GetAllUsersQuery()))
-.RequireAuthorization()
-.WithName("GetWeatherForecast")
-.WithOpenApi();
 
 using (var scope = app.Services.CreateScope())
 {

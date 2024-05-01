@@ -12,7 +12,7 @@ public class CreateUserCommand : IRequest
 
 public class UpdateUserCommand : IRequest
 {
-    public int Id { get; set; }
+    public long Id { get; set; }
     public string? Name { get; set;}
     public string? Email { get; set;}
     public string? Password { get; set;}
@@ -20,7 +20,7 @@ public class UpdateUserCommand : IRequest
 
 public class DeleteUserCommand : IRequest
 {
-    public int Id { get; set; }
+    public long Id { get; set; }
 }
 
 public class AuthenticateUserCommand : IRequest<string>

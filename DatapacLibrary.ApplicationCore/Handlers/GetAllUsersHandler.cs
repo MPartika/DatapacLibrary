@@ -3,7 +3,7 @@ using DatapacLibrary.Domain.Contracts;
 using DatapacLibrary.Domain.DataTransferObjects;
 using MediatR;
 
-namespace DatapacLibrary.ApplicationCore;
+namespace DatapacLibrary.ApplicationCore.Handlers;
 
 public class GetAllUsersHandler : IRequestHandler<GetAllUsersQuery, IEnumerable<UserDto>>
 {
@@ -16,6 +16,6 @@ public class GetAllUsersHandler : IRequestHandler<GetAllUsersQuery, IEnumerable<
 
     public async Task<IEnumerable<UserDto>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
     {
-        return await _userRepository.GetAllUsers();
+        return await _userRepository.GetAllUsersAsync();
     }
 }
