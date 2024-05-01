@@ -1,9 +1,12 @@
 using System.Reflection;
 using System.Text;
+using DatapacLibrary.ApplicationCore.Validators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using FluentValidation;
+using MediatR;
 
 namespace DatapacLibrary.ApplicationCore;
 
@@ -11,7 +14,11 @@ public static class ConfigureServices
 {
     public static IServiceCollection AddHandlers(this IServiceCollection services)
     {
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(), ServiceLifetime.Transient);
+        services.AddMediatR(cfg => 
+            cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationResponseBehavior<,>));
         return services;
     }
 

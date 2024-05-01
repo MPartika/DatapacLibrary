@@ -46,7 +46,7 @@ public class UserController : Controller
         return Accepted();
     }
 
-    [HttpDelete("id:long")]
+    [HttpDelete("{id:long}")]
     public async Task<IActionResult> DeleteUser(long id)
     {
         await _mediat.Send(new DeleteUserCommand { Id = id });

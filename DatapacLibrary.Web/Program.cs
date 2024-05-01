@@ -1,11 +1,7 @@
 using DatapacLibrary.Infrastructure;
 using DatapacLibrary.ApplicationCore;
 using Microsoft.EntityFrameworkCore;
-using MediatR;
-using DatapacLibrary.ApplicationCore.Queries;
 using DatapacLibrary.Web;
-using Microsoft.AspNetCore.Mvc;
-using DatapacLibrary.ApplicationCore.Commands;
 
 var builder = WebApplication.CreateBuilder(args);
 

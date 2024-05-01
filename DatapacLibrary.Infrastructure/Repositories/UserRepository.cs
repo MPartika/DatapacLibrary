@@ -45,7 +45,9 @@ internal class UserRepository : IUserRepository
 
     public async Task DeleteUserAsync(long id)
     {
-        var user = await _dbContext.Users.SingleAsync(x => x.Id == id);
+        var user = await _dbContext.Users.SingleOrDefaultAsync(x => x.Id == id);
+        if (user == null)
+            return;
         _dbContext.Remove(user);
         await _dbContext.SaveChangesAsync();
     }
