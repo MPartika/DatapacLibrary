@@ -14,4 +14,14 @@ public static class UserMapper
             Email = user.Email
         };
     }
+
+    public static UserPasswordDto ToUserWithPasswordDto(this User user)
+    {
+        return new UserPasswordDto
+        {
+            Id = user.Id,
+            Password = user.Password,
+            Salt = user.Salt
+        };
+    }
 }

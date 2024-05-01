@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DatapacLibrary.Infrastructure\DatapacLibrary.Infrastructure.csproj" />
+    <ProjectReference Include="..\DatapacLibrary.ApplicationCore\DatapacLibrary.ApplicationCore.csproj" />
   </ItemGroup>
 
 </Project>
