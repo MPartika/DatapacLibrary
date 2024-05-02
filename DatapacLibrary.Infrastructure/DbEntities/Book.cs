@@ -12,7 +12,7 @@ public class Book : IDbEntity
     [MaxLength(255)]
     public required string Title { get; set; }
     [MaxLength(255)]
-    public required string Author { get; set; }
+    public required string Author { get; set; } 
     [MaxLength(255)]
     public required string Publisher { get; set; }
     public int PublicationYear { get; set; }

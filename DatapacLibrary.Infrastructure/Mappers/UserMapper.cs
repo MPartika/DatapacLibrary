@@ -3,7 +3,7 @@ using DatapacLibrary.Infrastructure.DbEntities;
 
 namespace DatapacLibrary.Infrastructure.Mappers;
 
-public static class UserMapper
+internal static class UserMapper
 {
     public static UserDto ToUserDto(this User user)
     {

@@ -3,6 +3,7 @@ using DatapacLibrary.Infrastructure;
 using NUnit.Framework;
 using Microsoft.EntityFrameworkCore;
 using DatapacLibrary.Infrastructure.DbEntities;
+using DatapacLibrary.Domain;
 
 namespace DatapacLibrary.Test;
 
@@ -54,7 +55,7 @@ public class TestUserRepository
     }
 
     [Test]
-    public async Task ShouldUpdateUser()
+    public async Task ShouldUpdateUserEmail()
     {
         var repository = new UserRepository(_dbContext);
         _dbContext.Add(_user);
@@ -63,6 +64,38 @@ public class TestUserRepository
         await repository.UpdateUserAsync(_user.Id, null, "test", null, null);
 
         Assert.True(_dbContext.Users.Any(x => x.Email == "test"));
+
+        _dbContext.Remove(_user);
+        _dbContext.SaveChanges();
+    }
+
+    [Test]
+    public async Task ShouldUpdateUserName()
+    {
+        var repository = new UserRepository(_dbContext);
+        _dbContext.Add(_user);
+        _dbContext.SaveChanges();
+
+        await repository.UpdateUserAsync(_user.Id, "test", null, null, null);
+
+        Assert.True(_dbContext.Users.Any(x => x.Name == "test"));
+
+        _dbContext.Remove(_user);
+        _dbContext.SaveChanges();
+    }
+
+    [Test]
+    public async Task ShouldUpdateUserPassword()
+    {
+        var repository = new UserRepository(_dbContext);
+        _dbContext.Add(_user);
+        _dbContext.SaveChanges();
+
+        var password = AuthenticationHelper.HashPassword("test", out byte[] salt);
+
+        await repository.UpdateUserAsync(_user.Id, "test", null, password, salt);
+
+        Assert.True(_dbContext.Users.Any(x => x.Password == password));
 
         _dbContext.Remove(_user);
         _dbContext.SaveChanges();
