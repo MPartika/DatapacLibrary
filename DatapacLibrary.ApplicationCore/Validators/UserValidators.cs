@@ -34,7 +34,9 @@ public class CreateUserValidator : AbstractValidator<CreateUserCommand>
         RuleFor(command => command.Name)
             .NotEmpty().WithMessage("User name cannot be empty");
         RuleFor(command => command.Email)
-            .NotEmpty().WithMessage("User email cannot be empty");
+            .NotEmpty().WithMessage("User email cannot be empty")
+            .EmailAddress().WithMessage("User email must be valid");
+
         RuleFor(command => command.Password)
             .NotEmpty().WithMessage("Your password cannot be empty")
             .MinimumLength(8).WithMessage("Your password length must be at least 8.")
@@ -47,11 +49,15 @@ public class UpdateUserValidator : AbstractValidator<UpdateUserCommand>
 {
     public UpdateUserValidator()
     {
-        RuleFor(login => login.Password)
+        RuleFor(command => command.Email)
+            .NotEmpty().WithMessage("User email cannot be empty")
+            .EmailAddress().WithMessage("User email must be valid")
+            .When(command => !string.IsNullOrEmpty(command.Email));
+        RuleFor(command => command.Password)
             .MinimumLength(8).WithMessage("Your password length must be at least 8.")
             .Matches(@"[A-Z]+").WithMessage("Your password must contain at least one uppercase letter.")
             .Matches(@"[a-z]+").WithMessage("Your password must contain at least one lowercase letter.")
-            .When(login => !string.IsNullOrEmpty(login.Password));
+            .When(command => !string.IsNullOrEmpty(command.Password));
     }
 }
 

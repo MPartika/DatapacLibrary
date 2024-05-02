@@ -15,9 +15,14 @@ public class LibraryDbContext : DbContext
 
     public LibraryDbContext()
     {
-        var folder = Environment.SpecialFolder.LocalApplicationData;
-        var path = Environment.GetFolderPath(folder);
-        _dbPath = Path.Join(path, "Library.db");
+        _dbPath = Path.Join(GetPath, "Library.db");
+    }
+
+    // Fot Testing
+    public LibraryDbContext(string dbPath)
+    {
+        _dbPath = Path.Join(GetPath, dbPath);
+        
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -57,4 +62,6 @@ public class LibraryDbContext : DbContext
         }
         return base.SaveChangesAsync(cancellationToken);
     }
+
+    private string GetPath => Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 }
