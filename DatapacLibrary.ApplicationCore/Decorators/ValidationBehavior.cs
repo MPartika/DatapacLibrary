@@ -15,25 +15,7 @@ public sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<
 
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        if (!_validators.Any())
-        {
-            return await next();
-        }
-
-        var context = new ValidationContext<TRequest>(request);
-
-        var validationFailures = await Task.WhenAll(
-            _validators.Select(validator => validator.ValidateAsync(context)));
-
-        var errors = validationFailures
-            .Where(validationResult => !validationResult.IsValid)
-            .SelectMany(validationResult => validationResult.Errors)
-            .ToList();
-        if (errors.Any())
-        {
-            throw new ValidationException(errors);
-        }
-        return await next();
+        return await ValidationBaseBehavior<TRequest, TResponse>.Handle(request, next, _validators);
     }
 }
 
@@ -49,7 +31,18 @@ public sealed class ValidationResponseBehavior<TRequest, TResponse> : IPipelineB
 
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        if (!_validators.Any())
+        return await ValidationBaseBehavior<TRequest, TResponse>.Handle(request, next, _validators);
+    }
+}
+
+internal sealed class ValidationBaseBehavior<TRequest, TResponse>
+{
+    public static async Task<TResponse> Handle(
+        TRequest request, 
+        RequestHandlerDelegate<TResponse> next, 
+        IEnumerable<IValidator<TRequest>> validators)
+    {
+        if (!validators.Any())
         {
             return await next();
         }
@@ -57,7 +50,7 @@ public sealed class ValidationResponseBehavior<TRequest, TResponse> : IPipelineB
         var context = new ValidationContext<TRequest>(request);
 
         var validationFailures = await Task.WhenAll(
-            _validators.Select(validator => validator.ValidateAsync(context)));
+            validators.Select(validator => validator.ValidateAsync(context)));
 
         var errors = validationFailures
             .Where(validationResult => !validationResult.IsValid)
