@@ -7,7 +7,7 @@ namespace DatapacLibrary.Infrastructure;
 
 public class LibraryDbContext : DbContext
 {
-    private readonly string _dbPath;
+    private readonly string _dbPath = Path.Join(GetPath, "Library.db");
 
     public DbSet<User> Users { get; set; }
     public DbSet<Book> Books { get; set; }
@@ -15,7 +15,6 @@ public class LibraryDbContext : DbContext
 
     public LibraryDbContext()
     {
-        _dbPath = Path.Join(GetPath, "Library.db");
     }
 
     // Fot Testing
@@ -63,5 +62,5 @@ public class LibraryDbContext : DbContext
         return base.SaveChangesAsync(cancellationToken);
     }
 
-    private string GetPath => Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+    private static string GetPath => Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 }

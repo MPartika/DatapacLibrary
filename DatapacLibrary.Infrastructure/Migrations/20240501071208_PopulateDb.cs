@@ -9,21 +9,13 @@ namespace DatapacLibrary.Infrastructure.Migrations
     /// <inheritdoc />
     public partial class PopulateDb : Migration
     {
-        private readonly LibraryDbContext _dbContext;
-
-        public PopulateDb()
-        {
-            _dbContext = new LibraryDbContext();
-        }
+        
 
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            _dbContext.AddRange(AddUsers());
-            _dbContext.AddRange(AddBooks());
-
-            _dbContext.SaveChanges();
-            
+            AddUsers(migrationBuilder);
+            AddBooks(migrationBuilder);
         }
 
         /// <inheritdoc />
@@ -33,34 +25,27 @@ namespace DatapacLibrary.Infrastructure.Migrations
             migrationBuilder.Sql("DELETE FROM BOOKS", true);
         }
 
-        private IEnumerable<User> AddUsers()
+        private void AddUsers(MigrationBuilder migrationBuilder)
         {
             for (int i = 1; i <= 10; i++)
             {
-                yield return new User
-                {
-                    Name = $"User{i}",
-                    Email = $"user{i}@example.com",
-                    Password = AuthenticationHelper.HashPassword($"Password{i}", out byte[] salt),
-                    Salt = salt
-                };
+                migrationBuilder.InsertData(
+                    table: "Users", 
+                    columns: ["Name", "Email", "Password", "Salt", "Created", "Updated"], 
+                    values: [$"User{i}", $"user{i}@example.com", AuthenticationHelper.HashPassword($"Password{i}", out byte[] salt), salt, DateTime.UtcNow, DateTime.UtcNow]);
+
             }
         }
 
-        private IEnumerable<Book> AddBooks()
+        private void AddBooks(MigrationBuilder migrationBuilder)
         {
             var rnd = new Random();
             for (int i = 1; i <= 50; i++)
             {
-                yield return new Book
-                {
-                    Title = $"Title{i}",
-                    Author = $"Author{i}",
-                    ISBN = $"ISBN{i}",
-                    Publisher = $"Publisher{i}",
-                    PublicationYear = 1970 + i,
-                    NumberOfCopies = rnd.Next(1, 6)
-                };
+                migrationBuilder.InsertData(
+                    table: "Books",
+                    columns: ["Title", "Author", "Publisher", "PublicationYear", "ISBN", "NumberOfCopies", "Created", "Updated"],
+                    values: [$"Title{i}", $"Author{i}", $"Publisher{i}", 1970 + i, $"ISBN{i}", rnd.Next(1, 6), DateTime.UtcNow, DateTime.UtcNow]);
             }
         }
     }
