@@ -16,7 +16,9 @@ internal class UserRepository : IUserRepository
     }
 
     public async Task<UserPasswordDto?> GetUserAsync(string name) => (await _dbContext.Users.FirstOrDefaultAsync(x => x.Name == name))?.ToUserWithPasswordDto();
-    public async Task<IEnumerable<UserDto>> GetAllUsersAsync() => await _dbContext.Users.Select(x => x.ToUserDto()).ToListAsync();
+    public async Task<IEnumerable<UserDto>> GetAllUsersAsync() => 
+        await _dbContext.Users
+            .Select(x => x.ToUserDto()).ToListAsync();
     public async Task CreateUserAsync(string name, string Email, byte[] password, byte[] salt)
     {
         _dbContext.Add(new User

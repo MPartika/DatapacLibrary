@@ -22,7 +22,7 @@ namespace DatapacLibrary.Infrastructure.Migrations
 
             modelBuilder.Entity("DatapacLibrary.Infrastructure.DbEntities.Book", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -104,7 +104,7 @@ namespace DatapacLibrary.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("BookId")
+                    b.Property<long>("BookId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Created")
@@ -116,7 +116,7 @@ namespace DatapacLibrary.Infrastructure.Migrations
                     b.Property<DateTime>("Updated")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("UserId")
+                    b.Property<long>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.Property<long?>("UsersId")
