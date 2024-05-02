@@ -69,7 +69,7 @@ public class TestUserValidators
     }
 
     [Test]
-    public void EmailShouldBeInvalidated()
+    public void EmailShouldBeInvalid()
     {
         var password = "1234abcdEFGH";
         var createValidator = new CreateUserValidator();
@@ -80,5 +80,14 @@ public class TestUserValidators
         var updateValidationResult = updateValidator.Validate(updateCommand);
         Assert.IsTrue(createValidationResult.Errors.Any(x => x.ErrorMessage == "User email must be valid"));
         Assert.IsTrue(updateValidationResult.Errors.Any(x => x.ErrorMessage == "User email must be valid"));
+    }
+
+    [Test]
+    public void NameShouldBeInvalid()
+    {
+        var updateValidator = new UpdateUserValidator();
+        var updateCommand = new UpdateUserCommand { Name="" };
+        var updateValidationResult = updateValidator.Validate(updateCommand);
+        Assert.IsTrue(updateValidationResult.Errors.Any(x => x.ErrorMessage == "User name cannot be empty"));
     }
 }

@@ -18,11 +18,10 @@ internal static class BookMapper
         };
     }
 
-    public static Book ToBook(this BookDto dto)
+    public static Book ToBook(this CreateBookDto dto)
     {
         return new Book
         {
-            Id = dto.Id,
             Title = dto.Title, 
             Author = dto.Author,
             Publisher = dto.Publisher,

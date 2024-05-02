@@ -47,7 +47,14 @@ public class TestBookRepository
     {
         var repository = new BookRepository(_dbContext);
 
-        await repository.CreateBookAsync(_book.ToBookDto());
+        await repository.CreateBookAsync(
+            new CreateBookDto
+            {
+                Author = _book.Author,
+                ISBN = _book.ISBN,
+                Title = _book.Title,
+                Publisher = _book.Publisher
+            });
 
         var book = _dbContext.Books.FirstOrDefault(x => x.Title == _book.Title);
         Assert.IsNotNull(book);

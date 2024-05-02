@@ -22,7 +22,7 @@ internal class BookRepository : IBookRepository
         return book.ToBookDto();
     }
 
-    public async Task CreateBookAsync(BookDto book)
+    public async Task CreateBookAsync(CreateBookDto book)
     {
         _dbContext.Add(book.ToBook());
         await _dbContext.SaveChangesAsync();

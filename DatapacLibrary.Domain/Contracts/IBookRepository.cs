@@ -14,7 +14,7 @@ public interface IBookRepository : IDependency
     /// Create a new book record in DB
     /// </summary>
     /// <param name="book">book object represented by BookDto</param>
-    Task CreateBookAsync(BookDto book);
+    Task CreateBookAsync(CreateBookDto book);
     /// <summary>
     /// If needed updates the book object in DB
     /// </summary>

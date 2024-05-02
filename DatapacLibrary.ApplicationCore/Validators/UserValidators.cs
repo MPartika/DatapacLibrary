@@ -49,6 +49,9 @@ public class UpdateUserValidator : AbstractValidator<UpdateUserCommand>
 {
     public UpdateUserValidator()
     {
+        RuleFor(command => command.Name)
+            .NotEmpty().WithMessage("User name cannot be empty")
+            .When(command => command.Name != null);
         RuleFor(command => command.Email)
             .NotEmpty().WithMessage("User email cannot be empty")
             .EmailAddress().WithMessage("User email must be valid")
