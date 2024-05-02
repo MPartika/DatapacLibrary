@@ -1,5 +1,7 @@
 ﻿using DatapacLibrary.Infrastructure.DbEntities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace DatapacLibrary.Infrastructure;
 
@@ -19,7 +21,7 @@ public class LibraryDbContext : DbContext
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseSqlite($"Data Source={_dbPath}");
+        => options.UseSqlite($"Data Source={_dbPath}").LogTo(Log.Information, LogLevel.Information);
 
 
     public override int SaveChanges()

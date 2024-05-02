@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using DatapacLibrary.Web;
 using Serilog;
 using Serilog.Events;
-using DatapacLibrary.Web.Controllers;
 using System.Text.Json;
 using System.Text;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+    .MinimumLevel.Override("System", LogEventLevel.Information)
     .Enrich.FromLogContext()
     .Enrich.WithMachineName()
     .Enrich.WithThreadId()
