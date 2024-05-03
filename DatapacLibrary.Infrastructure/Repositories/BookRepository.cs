@@ -43,8 +43,6 @@ internal class BookRepository : IBookRepository
             originalBook.ISBN = book.ISBN;
         if (book.PublicationYear is not null && book.PublicationYear != originalBook.PublicationYear)
             originalBook.PublicationYear = (int)book.PublicationYear;
-        if (book.NumberOfCopies is not null && book.NumberOfCopies != originalBook.NumberOfCopies)
-            originalBook.NumberOfCopies = (int)book.NumberOfCopies;
         await _dbContext.SaveChangesAsync();
     }
 

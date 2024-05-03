@@ -27,7 +27,7 @@ internal class BookLoanRepository
 
     public async Task<bool> IsBookAvailable(long bookId)
     {
-        return await _dbContext.Books.AnyAsync(b => b.Id == bookId && (b.UserBooks == null || b.UserBooks.Count(x => !x.Returned) < b.NumberOfCopies));
+        return await _dbContext.Books.AnyAsync(b => b.Id == bookId && (b.UserBooks == null || b.UserBooks.Any(x => !x.Returned)));
     }
 
     public async Task<IEnumerable<LoanWarningDto>> GetLoansPastDueTime()

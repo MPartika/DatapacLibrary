@@ -18,7 +18,6 @@ public class Book : IDbEntity
     public int PublicationYear { get; set; }
     [MaxLength(13)]
     public required string ISBN { get; set; }
-    public int NumberOfCopies { get; set; }
     public DateTime Created { get; set; }
     public DateTime Updated { get; set; }
 

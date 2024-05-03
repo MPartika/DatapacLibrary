@@ -44,8 +44,8 @@ namespace DatapacLibrary.Infrastructure.Migrations
             {
                 migrationBuilder.InsertData(
                     table: "Books",
-                    columns: ["Title", "Author", "Publisher", "PublicationYear", "ISBN", "NumberOfCopies", "Created", "Updated"],
-                    values: [$"Title{i}", $"Author{i}", $"Publisher{i}", 1970 + i, $"ISBN{i}", rnd.Next(1, 6), DateTime.UtcNow, DateTime.UtcNow]);
+                    columns: ["Title", "Author", "Publisher", "PublicationYear", "ISBN", "Created", "Updated"],
+                    values: [$"Title{i}", $"Author{i}", $"Publisher{i}", 1970 + i, $"ISBN{i}", DateTime.UtcNow, DateTime.UtcNow]);
             }
         }
     }

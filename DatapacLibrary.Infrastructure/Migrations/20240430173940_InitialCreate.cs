@@ -22,7 +22,6 @@ namespace DatapacLibrary.Infrastructure.Migrations
                     Publisher = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
                     PublicationYear = table.Column<int>(type: "INTEGER", nullable: false),
                     ISBN = table.Column<string>(type: "TEXT", maxLength: 13, nullable: false),
-                    NumberOfCopies = table.Column<int>(type: "INTEGER", nullable: false),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },

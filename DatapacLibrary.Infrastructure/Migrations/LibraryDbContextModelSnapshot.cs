@@ -3,7 +3,6 @@ using System;
 using DatapacLibrary.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
@@ -35,9 +34,6 @@ namespace DatapacLibrary.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(13)
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("NumberOfCopies")
-                        .HasColumnType("INTEGER");
 
                     b.Property<int>("PublicationYear")
                         .HasColumnType("INTEGER");

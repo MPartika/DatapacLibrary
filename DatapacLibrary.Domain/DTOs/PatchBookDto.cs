@@ -8,5 +8,4 @@ public class PatchBookDto
     public string? Publisher { get; set; }
     public int? PublicationYear { get; set; }
     public string? ISBN { get; set; }
-    public int? NumberOfCopies { get; set; }
 }

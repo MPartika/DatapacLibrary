@@ -39,9 +39,6 @@ namespace DatapacLibrary.Infrastructure.Migrations
                         .HasMaxLength(13)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("NumberOfCopies")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("PublicationYear")
                         .HasColumnType("INTEGER");
 

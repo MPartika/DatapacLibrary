@@ -126,21 +126,6 @@ public class TestBookRepository
     }
 
     [Test]
-    public async Task ShouldUpdateBookNumberOfCopies()
-    {
-        var repository = new BookRepository(_dbContext);
-        _dbContext.Add(_book);
-        _dbContext.SaveChanges();
-
-        await repository.UpdateBookAsync(new PatchBookDto { Id = _book.Id, NumberOfCopies = 3 });
-
-        Assert.True(_dbContext.Books.Any(x => x.NumberOfCopies == 3));
-
-        _dbContext.Remove(_book);
-        _dbContext.SaveChanges();
-    }
-
-    [Test]
     public async Task ShouldUpdateBookPublicationYear()
     {
         var repository = new BookRepository(_dbContext);
