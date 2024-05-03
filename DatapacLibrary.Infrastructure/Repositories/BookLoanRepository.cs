@@ -20,6 +20,7 @@ internal class BookLoanRepository
             throw new ArgumentException("Book not found", "BookId");
         if (!await _dbContext.Users.AnyAsync(x => x.Id == userId))
             throw new ArgumentException("User not found", "UserId");
+        if (!await IsBookAvailable(bookId))
 
         _dbContext.Add(new UserBook{UserId = userId, BookId = bookId});
         _dbContext.SaveChanges();
@@ -27,7 +28,7 @@ internal class BookLoanRepository
 
     public async Task<bool> IsBookAvailable(long bookId)
     {
-        return await _dbContext.Books.AnyAsync(b => b.Id == bookId && (b.UserBooks == null || b.UserBooks.Any(x => !x.Returned)));
+        return await _dbContext.Books.AnyAsync(b => b.Id == bookId && (b.UserBooks == null || !b.UserBooks.Any(x => !x.Returned)));
     }
 
     public async Task<IEnumerable<LoanWarningDto>> GetLoansPastDueTime()

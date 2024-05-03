@@ -38,8 +38,6 @@ public class TestBookRepository
         var book = await repository.GetBookAsync(_book.Id);
 
         Assert.IsNotNull(book);
-        _dbContext.Remove(_book);
-        _dbContext.SaveChanges();
     }
 
     [Test]
@@ -58,9 +56,6 @@ public class TestBookRepository
 
         var book = _dbContext.Books.FirstOrDefault(x => x.Title == _book.Title);
         Assert.IsNotNull(book);
-        if (book is not null)
-            _dbContext.Remove(book);
-        _dbContext.SaveChanges();
     }
 
     [Test]
@@ -74,9 +69,6 @@ public class TestBookRepository
         await repository.UpdateBookAsync(new PatchBookDto { Id = _book.Id, Title = "test" });
 
         Assert.True(_dbContext.Books.Any(x => x.Title == "test"));
-
-        _dbContext.Remove(_book);
-        _dbContext.SaveChanges();
     }
 
     [Test]
@@ -89,9 +81,6 @@ public class TestBookRepository
         await repository.UpdateBookAsync(new PatchBookDto { Id = _book.Id, Author = "test" });
 
         Assert.True(_dbContext.Books.Any(x => x.Author == "test"));
-
-        _dbContext.Remove(_book);
-        _dbContext.SaveChanges();
     }
 
     [Test]
@@ -105,9 +94,6 @@ public class TestBookRepository
         await repository.UpdateBookAsync(new PatchBookDto { Id = _book.Id, ISBN = "test" });
 
         Assert.True(_dbContext.Books.Any(x => x.ISBN == "test"));
-
-        _dbContext.Remove(_book);
-        _dbContext.SaveChanges();
     }
 
     [Test]
@@ -120,9 +106,6 @@ public class TestBookRepository
         await repository.UpdateBookAsync(new PatchBookDto { Id = _book.Id, Publisher = "test" });
 
         Assert.True(_dbContext.Books.Any(x => x.Publisher == "test"));
-
-        _dbContext.Remove(_book);
-        _dbContext.SaveChanges();
     }
 
     [Test]
@@ -135,9 +118,6 @@ public class TestBookRepository
         await repository.UpdateBookAsync(new PatchBookDto { Id = _book.Id, PublicationYear = 3 });
 
         Assert.True(_dbContext.Books.Any(x => x.PublicationYear == 3));
-
-        _dbContext.Remove(_book);
-        _dbContext.SaveChanges();
     }
 
     [Test]
