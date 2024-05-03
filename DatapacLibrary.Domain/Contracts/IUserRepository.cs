@@ -11,6 +11,12 @@ public interface IUserRepository : IDependency
     /// <returns>User id, password and salt</returns>
     Task<UserPasswordDto?> GetUserAsync(string name);
     /// <summary>
+    /// Get User by it's Id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>UserPasswordDto</returns>
+    Task<UserPasswordDto?> GetUserAsync(long id);
+    /// <summary>
     /// Get all Users
     /// </summary>
     /// <returns>User without password and salt</returns>

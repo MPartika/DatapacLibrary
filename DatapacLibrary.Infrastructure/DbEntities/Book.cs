@@ -8,7 +8,7 @@ public class Book : IDbEntity
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
+    public long Id { get; set; }
     [MaxLength(255)]
     public required string Title { get; set; }
     [MaxLength(255)]

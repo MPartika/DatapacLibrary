@@ -13,8 +13,8 @@ internal static class UserMapper
             Name = user.Name,
             Email = user.Email,
             BooksCurentlyLended = user.UserBooks?
-                .Where(x => !x.Returned)
-                .Select(x => x.Book?.ToBookDto())
+                .Where(x => !x?.Returned ?? false)
+                .Select(x => x?.Book?.ToBookDto())
                 .ToList(),
         };
     }

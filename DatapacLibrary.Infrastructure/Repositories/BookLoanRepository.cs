@@ -1,3 +1,4 @@
+using DatapacLibrary.Domain.Contracts;
 using DatapacLibrary.Domain.DataTransferObjects;
 using DatapacLibrary.Infrastructure.DbEntities;
 using DatapacLibrary.Infrastructure.Mappers;
@@ -5,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DatapacLibrary.Infrastructure.Repositories;
 
-internal class BookLoanRepository
+internal class BookLoanRepository : IBookLoanRepository
 {
     private readonly LibraryDbContext _dbContext;
 

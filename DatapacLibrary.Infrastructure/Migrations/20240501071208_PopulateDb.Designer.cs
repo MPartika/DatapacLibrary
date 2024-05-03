@@ -136,7 +136,6 @@ namespace DatapacLibrary.Infrastructure.Migrations
                     b.HasOne("DatapacLibrary.Infrastructure.DbEntities.Book", "Books")
                         .WithMany("UserBooks")
                         .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DatapacLibrary.Infrastructure.DbEntities.User", "Users")

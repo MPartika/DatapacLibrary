@@ -19,5 +19,5 @@ public class User : IDbEntity
     public DateTime Created { get; set; }
     public DateTime Updated { get; set; }
 
-    public ICollection<UserBook>? UserBooks { get; set; }
+    public ICollection<UserBook?>? UserBooks { get; set; }
 }

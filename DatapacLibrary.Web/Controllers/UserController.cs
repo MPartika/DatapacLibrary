@@ -1,4 +1,3 @@
-using System.Net;
 using DatapacLibrary.ApplicationCore.Commands;
 using DatapacLibrary.ApplicationCore.Queries;
 using MediatR;

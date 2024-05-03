@@ -2,7 +2,7 @@
 
 namespace DatapacLibrary.Domain.Contracts;
 
-public  interface IBookLoanRepository
+public  interface IBookLoanRepository : IDependency
 {
     /// <summary>
     /// Create a new record in User book table book will be unavailable after this
