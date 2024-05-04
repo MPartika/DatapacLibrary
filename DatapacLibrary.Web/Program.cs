@@ -7,6 +7,8 @@ using Serilog.Events;
 using System.Text.Json;
 using System.Text;
 using Hangfire;
+using Newtonsoft.Json.Serialization;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
@@ -31,7 +33,11 @@ builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureSwaggerGen();
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+    {
+        options.Conventions.Add(
+            new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
+    });
 builder.Services.AddHangFire();
 
 

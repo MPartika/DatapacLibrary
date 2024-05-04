@@ -56,6 +56,6 @@ internal class BookLoanRepository : IBookLoanRepository
         var loan = await _dbContext.UserBooks.SingleAsync(x => x.Id == id);
         loan.ValidUntil = DateTime.UtcNow.AddDays(numberOfDays);
 
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync();
     }
 }

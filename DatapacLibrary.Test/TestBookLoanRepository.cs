@@ -2,6 +2,7 @@ using DatapacLibrary.Infrastructure;
 using DatapacLibrary.Infrastructure.DbEntities;
 using DatapacLibrary.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 
 namespace DatapacLibrary.Test;
 
@@ -91,5 +92,23 @@ public class TestBookLoanRepository
 
         Assert.That(booksPastReturnTime, Is.Not.Null);
         Assert.That(booksPastReturnTime, Is.Not.Empty);
+    }
+
+    [Test]
+    public async Task ShouldExtendBookValidDateByNumberOfDays()
+    {
+        _dbContext.Add(_user);
+        _dbContext.Add(_book);
+        await _dbContext.SaveChangesAsync();
+        var originalDate = DateTime.UtcNow.AddDays(-1);
+        var notReturnedBookLoan = new UserBook{BookId = _book.Id, UserId = _user.Id, Returned = false, ValidUntil = originalDate};
+        _dbContext.Add(notReturnedBookLoan);
+        await _dbContext.SaveChangesAsync();
+
+        var repository = new BookLoanRepository(_dbContext);
+        await repository.ExtendValidUnitByDays(notReturnedBookLoan.Id, 2);
+
+        var newBookLoan = _dbContext.UserBooks.Single(x => x.Id == notReturnedBookLoan.Id);
+        Assert.That(newBookLoan.ValidUntil > originalDate);
     }
 }
