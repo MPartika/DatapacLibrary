@@ -7,7 +7,6 @@ using Serilog.Events;
 using System.Text.Json;
 using System.Text;
 using Hangfire;
-using Newtonsoft.Json.Serialization;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
 Log.Logger = new LoggerConfiguration()

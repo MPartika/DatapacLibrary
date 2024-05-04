@@ -15,7 +15,7 @@ internal static class BookMapper
             Publisher = book.Publisher,
             ISBN= book.ISBN,
             PublicationYear = book.PublicationYear,
-            IsAvelible = book.UserBooks?.Any(x => !x.Returned) ?? false,
+            IsAvailable = !book.UserBooks?.Any(x => !x.Returned) ?? true,
         };
     }
 

@@ -12,10 +12,27 @@ namespace DatapacLibrary.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Admins",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    Password = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    Salt = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Admins", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Books",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Title = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
                     Author = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
@@ -38,8 +55,6 @@ namespace DatapacLibrary.Infrastructure.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
                     Email = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    Password = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    Salt = table.Column<byte[]>(type: "BLOB", nullable: false),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
@@ -52,15 +67,14 @@ namespace DatapacLibrary.Infrastructure.Migrations
                 name: "UserBooks",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    UserId = table.Column<int>(type: "INTEGER", nullable: false),
-                    BookId = table.Column<int>(type: "INTEGER", nullable: false),
+                    UserId = table.Column<long>(type: "INTEGER", nullable: false),
+                    BookId = table.Column<long>(type: "INTEGER", nullable: false),
                     ValidUntil = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Returned = table.Column<bool>(type: "INTEGER", nullable: false),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    UsersId = table.Column<long>(type: "INTEGER", nullable: true)
+                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -72,10 +86,11 @@ namespace DatapacLibrary.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserBooks_Users_UsersId",
-                        column: x => x.UsersId,
+                        name: "FK_UserBooks_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -84,14 +99,17 @@ namespace DatapacLibrary.Infrastructure.Migrations
                 column: "BookId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserBooks_UsersId",
+                name: "IX_UserBooks_UserId",
                 table: "UserBooks",
-                column: "UsersId");
+                column: "UserId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Admins");
+
             migrationBuilder.DropTable(
                 name: "UserBooks");
 

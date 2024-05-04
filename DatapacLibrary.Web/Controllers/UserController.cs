@@ -18,21 +18,6 @@ public class UserController : Controller
     }
 
     /// <summary>
-    /// Authenticates user 
-    /// </summary>
-    /// <param name="command"></param>
-    /// <returns>Authentication JWT token</returns>
-    /// <remarks>
-    /// Sample request: {"Name": "User1", "Password": "Password1" }
-    /// </remarks>
-    [AllowAnonymous]
-    [HttpPost("[action]")]
-    public async Task<IActionResult> Login([FromBody] AuthenticateUserCommand command)
-    {
-        return Ok(await _mediat.Send(command));
-    }
-
-    /// <summary>
     /// Get All Users
     /// </summary>
     /// <returns>Returns List of UserDto objects</returns>
@@ -47,9 +32,8 @@ public class UserController : Controller
     /// </summary>
     /// <param name="command">Accepts CreateUserCommand object</param>
     /// <remarks>
-    /// Sample request: {"Name": "User51", "Password": "Password51", "Email": "User51@example.com" }
+    /// Sample request: {"Name": "User51", "Email": "User51@example.com" }
     /// </remarks>
-    [AllowAnonymous]
     [HttpPost]
     public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand command)
     {
@@ -72,11 +56,9 @@ public class UserController : Controller
     }
 
     /// <summary>
-    /// Update User 
+    /// Delete User 
     /// </summary>
-    /// <param name="id" example="10">Accepts CreateUserCommand object</param>
-    /// <remarks>
-    /// </remarks>
+    /// <param name="id" example="10"></param>
     [HttpDelete("{id:long}")]
     public async Task<IActionResult> DeleteUser(long id)
     {

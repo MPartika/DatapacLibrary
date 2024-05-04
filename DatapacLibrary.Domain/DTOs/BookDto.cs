@@ -8,5 +8,5 @@ public class BookDto
     public required string Publisher { get; set; }
     public int PublicationYear { get; set; }
     public required string ISBN { get; set; }
-    public bool IsAvelible { get; set; }
+    public bool IsAvailable { get; set; }
 }

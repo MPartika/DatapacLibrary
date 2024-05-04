@@ -1,5 +1,4 @@
 ﻿using DatapacLibrary.Domain;
-using DatapacLibrary.Infrastructure.DbEntities;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -9,11 +8,10 @@ namespace DatapacLibrary.Infrastructure.Migrations
     /// <inheritdoc />
     public partial class PopulateDb : Migration
     {
-        
-
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            AddAdmin(migrationBuilder);
             AddUsers(migrationBuilder);
             AddBooks(migrationBuilder);
         }
@@ -21,8 +19,21 @@ namespace DatapacLibrary.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.Sql("DELETE FROM ADMINS", true);
             migrationBuilder.Sql("DELETE FROM USERS", true);
             migrationBuilder.Sql("DELETE FROM BOOKS", true);
+        }
+
+        private void AddAdmin(MigrationBuilder migrationBuilder)
+        {
+            for (int i = 1; i <= 5; i++)
+            {
+                migrationBuilder.InsertData(
+                    table: "Admins", 
+                    columns: ["Name", "Password", "Salt", "Created", "Updated"], 
+                    values: [$"admin{i}", AuthenticationHelper.HashPassword($"Password{i}", out byte[] salt), salt, DateTime.UtcNow, DateTime.UtcNow]);
+
+            }
         }
 
         private void AddUsers(MigrationBuilder migrationBuilder)
@@ -31,8 +42,8 @@ namespace DatapacLibrary.Infrastructure.Migrations
             {
                 migrationBuilder.InsertData(
                     table: "Users", 
-                    columns: ["Name", "Email", "Password", "Salt", "Created", "Updated"], 
-                    values: [$"User{i}", $"user{i}@example.com", AuthenticationHelper.HashPassword($"Password{i}", out byte[] salt), salt, DateTime.UtcNow, DateTime.UtcNow]);
+                    columns: ["Name", "Email", "Created", "Updated"], 
+                    values: [$"User{i}", $"user{i}@example.com", DateTime.UtcNow, DateTime.UtcNow]);
 
             }
         }

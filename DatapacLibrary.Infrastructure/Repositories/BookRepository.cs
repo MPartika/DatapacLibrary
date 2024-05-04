@@ -16,7 +16,7 @@ internal class BookRepository : IBookRepository
 
     public async Task<BookDto?> GetBookAsync(long id)
     {
-        var book = await _dbContext.Books.SingleOrDefaultAsync(book => book.Id == id);
+        var book = await _dbContext.Books.Include(b => b.UserBooks).SingleOrDefaultAsync(book => book.Id == id);
         if (book == null)
             return null;
         return book.ToBookDto();

@@ -1,5 +1,4 @@
 using DatapacLibrary.ApplicationCore.Commands;
-using DatapacLibrary.Domain;
 using DatapacLibrary.Domain.Contracts;
 using MediatR;
 
@@ -16,10 +15,6 @@ public class UpdateUserHandler : IRequestHandler<UpdateUserCommand>
 
     public async Task Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
-        byte[]? salt = null;
-        byte[]? password = request.Password is not null ? 
-            AuthenticationHelper.HashPassword(request.Password, out salt) 
-            : null;
-        await _userRepository.UpdateUserAsync(request.Id, request.Name, request.Email, password, salt);
+        await _userRepository.UpdateUserAsync(request.Id, request.Name, request.Email);
     }
 }

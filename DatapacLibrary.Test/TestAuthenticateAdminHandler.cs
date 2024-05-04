@@ -10,15 +10,15 @@ namespace DatapacLibrary.Test;
 
 public class TestUserHandlers
 {
-    private Mock<IUserRepository> _userRepositoryMock = new();
+    private Mock<IAdminRepository> _userRepositoryMock = new();
 
     [Test]
-    public async Task TestAuthenticateUserHandler()
+    public async Task TestAuthenticateAdminHandler()
     {
         var password = "password";
-        var command = new AuthenticateUserCommand { Name = "Test", Password = password };
+        var command = new AuthenticateAdminCommand { Name = "Test", Password = password };
         var dbPassword = AuthenticationHelper.HashPassword(password, out byte[] salt);
-        _userRepositoryMock.Setup(x => x.GetUserAsync(command.Name)).ReturnsAsync(new UserPasswordDto { Password = dbPassword, Salt = salt });
+        _userRepositoryMock.Setup(x => x.GetAdminAsync(command.Name)).ReturnsAsync(new AdminDto { Name= command.Name, Password = dbPassword, Salt = salt });
         var inMemorySettings = new Dictionary<string, string?> 
         {
             {"JwtSettings:Issuer", "Issuer"},

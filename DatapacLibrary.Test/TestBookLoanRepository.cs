@@ -9,7 +9,7 @@ namespace DatapacLibrary.Test;
 public class TestBookLoanRepository
 {
     private LibraryDbContext _dbContext;
-    private User _user = new User { Name = "Test", Email = "", Password = [], Salt = [] };
+    private User _user = new User { Name = "Test", Email = "" };
     private Book _book = new Book { Author = "Test", ISBN = "Test", Publisher = "Test", Title = "Test" };
 
     [SetUp]

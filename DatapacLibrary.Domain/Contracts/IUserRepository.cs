@@ -5,17 +5,17 @@ namespace DatapacLibrary.Domain.Contracts;
 public interface IUserRepository : IDependency
 {
     /// <summary>
-    /// Get User by it's name for authorization purposes  
+    /// Get User by it's name 
     /// </summary>
     /// <param name="name">User's name</param>
-    /// <returns>User id, password and salt</returns>
-    Task<UserPasswordDto?> GetUserAsync(string name);
+    /// <returns>User object</returns>
+    Task<UserDto?> GetUserAsync(string name);
     /// <summary>
     /// Get User by it's Id
     /// </summary>
     /// <param name="id"></param>
-    /// <returns>UserPasswordDto</returns>
-    Task<UserPasswordDto?> GetUserAsync(long id);
+    /// <returns>UserDto</returns>
+    Task<UserDto?> GetUserAsync(long id);
     /// <summary>
     /// Get all Users
     /// </summary>
@@ -26,18 +26,14 @@ public interface IUserRepository : IDependency
     /// </summary>
     /// <param name="name">Users's name</param>
     /// <param name="Email">Users's email</param>
-    /// <param name="password">User's password</param>
-    /// <param name="salt">Salt generated with password</param>
-    Task CreateUserAsync(string name, string Email, byte[] password, byte[] salt);
+    Task CreateUserAsync(string name, string Email);
     /// <summary>
     /// Update users record
     /// </summary>
     /// <param name="id">User's id</param>
     /// <param name="name">Users's name</param>
     /// <param name="email">Users's email</param>
-    /// <param name="password">Users's password</param>
-    /// <param name="salt">Salt generated with password</param>
-    Task UpdateUserAsync(long id, string? name, string? email, byte[]? password, byte[]? salt);
+    Task UpdateUserAsync(long id, string? name, string? email);
     /// <summary>
     /// Deletes users record
     /// </summary>

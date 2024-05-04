@@ -1,5 +1,4 @@
 using DatapacLibrary.ApplicationCore.Commands;
-using DatapacLibrary.Domain;
 using DatapacLibrary.Domain.Contracts;
 using MediatR;
 
@@ -16,7 +15,6 @@ public class CreateUserHandler : IRequestHandler<CreateUserCommand>
 
     public async Task Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        var password = AuthenticationHelper.HashPassword(request.Password, out byte[] salt);
-        await _userRepository.CreateUserAsync(request.Name, request.Email, password, salt);
+        await _userRepository.CreateUserAsync(request.Name, request.Email);
     }
 }

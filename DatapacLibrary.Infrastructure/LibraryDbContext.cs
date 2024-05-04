@@ -10,6 +10,7 @@ public class LibraryDbContext : DbContext
     private readonly string _dbPath = Path.Join(GetPath, "Library.db");
 
     public DbSet<User> Users { get; set; }
+    public DbSet<Admin> Admins { get; set; }
     public DbSet<Book> Books { get; set; }
     public DbSet<UserBook> UserBooks { get; set; }
 

@@ -3,6 +3,7 @@ using System;
 using DatapacLibrary.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
@@ -16,9 +17,39 @@ namespace DatapacLibrary.Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
 
+            modelBuilder.Entity("DatapacLibrary.Infrastructure.DbEntities.Admin", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
+                    b.Property<byte[]>("Password")
+                        .IsRequired()
+                        .HasColumnType("BLOB");
+
+                    b.Property<byte[]>("Salt")
+                        .IsRequired()
+                        .HasColumnType("BLOB");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Admins");
+                });
+
             modelBuilder.Entity("DatapacLibrary.Infrastructure.DbEntities.Book", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -75,14 +106,6 @@ namespace DatapacLibrary.Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
-                    b.Property<byte[]>("Password")
-                        .IsRequired()
-                        .HasColumnType("BLOB");
-
-                    b.Property<byte[]>("Salt")
-                        .IsRequired()
-                        .HasColumnType("BLOB");
-
                     b.Property<DateTime>("Updated")
                         .HasColumnType("TEXT");
 
@@ -93,11 +116,11 @@ namespace DatapacLibrary.Infrastructure.Migrations
 
             modelBuilder.Entity("DatapacLibrary.Infrastructure.DbEntities.UserBook", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("BookId")
+                    b.Property<long>("BookId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Created")
@@ -109,10 +132,7 @@ namespace DatapacLibrary.Infrastructure.Migrations
                     b.Property<DateTime>("Updated")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long?>("UsersId")
+                    b.Property<long>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("ValidUntil")
@@ -122,26 +142,28 @@ namespace DatapacLibrary.Infrastructure.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.HasIndex("UsersId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserBooks");
                 });
 
             modelBuilder.Entity("DatapacLibrary.Infrastructure.DbEntities.UserBook", b =>
                 {
-                    b.HasOne("DatapacLibrary.Infrastructure.DbEntities.Book", "Books")
+                    b.HasOne("DatapacLibrary.Infrastructure.DbEntities.Book", "Book")
                         .WithMany("UserBooks")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DatapacLibrary.Infrastructure.DbEntities.User", "Users")
+                    b.HasOne("DatapacLibrary.Infrastructure.DbEntities.User", "User")
                         .WithMany("UserBooks")
-                        .HasForeignKey("UsersId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Books");
+                    b.Navigation("Book");
 
-                    b.Navigation("Users");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DatapacLibrary.Infrastructure.DbEntities.Book", b =>

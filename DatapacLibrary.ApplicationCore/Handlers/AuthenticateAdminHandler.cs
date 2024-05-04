@@ -10,23 +10,23 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace DatapacLibrary.ApplicationCore.Handlers;
 
-public class AuthenticateUserHandler : IRequestHandler<AuthenticateUserCommand, string>
+public class AuthenticateUserHandler : IRequestHandler<AuthenticateAdminCommand, string>
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IAdminRepository _adminRepository;
     private readonly IConfiguration _config;
 
-    public AuthenticateUserHandler(IUserRepository userRepository, IConfiguration config)
+    public AuthenticateUserHandler(IAdminRepository adminRepository, IConfiguration config)
     {
-        _userRepository = userRepository;
+        _adminRepository = adminRepository;
         _config = config;
     }
 
-    public async Task<string> Handle(AuthenticateUserCommand request, CancellationToken cancellationToken)
+    public async Task<string> Handle(AuthenticateAdminCommand request, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.GetUserAsync(request.Name);
-        if (user == null)
+        var admin = await _adminRepository.GetAdminAsync(request.Name);
+        if (admin == null)
             throw new ArgumentException("User name or password is incorrect!");
-        if (!AuthenticationHelper.VerifyPassword(request.Password ,user.Password, user.Salt))
+        if (!AuthenticationHelper.VerifyPassword(request.Password ,admin.Password, admin.Salt))
             throw new ArgumentException("User name or password is incorrect!");
 
         return BuildToken();
