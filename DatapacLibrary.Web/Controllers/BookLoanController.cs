@@ -1,4 +1,5 @@
 ﻿using DatapacLibrary.ApplicationCore.Commands;
+using DatapacLibrary.ApplicationCore.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,17 @@ public class BookLoanController : Controller
     public BookLoanController(IMediator mediat)
     {
         _mediat = mediat;
+    }
+    
+    // <summary>
+    /// Check if loan exists if no returns null and if yes returns object 
+    /// </summary>
+    /// <param name="userId"></param>
+    /// /// <param name="bookId"></param>
+    [HttpGet("user/{userId:long}/book/{bookId:Long}")]
+    public async Task<IActionResult> WasBookReturned(long userId, long bookId)
+    {
+        return Ok(await _mediat.Send(new WasBookReturnedQuery {UserId = userId, BookId = bookId}));
     }
 
     /// <summary>

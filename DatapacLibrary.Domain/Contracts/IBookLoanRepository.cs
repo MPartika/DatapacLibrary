@@ -37,4 +37,11 @@ public  interface IBookLoanRepository : IDependency
     /// <param name="numberOfDays"></param>
     /// <returns></returns>
     Task ExtendValidUnitByDays(long id, short numberOfDays);
+    /// <summary>
+    /// Get current holder of the book or if it was returned
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="bookId"></param>
+    /// <returns></returns>
+    Task<WasBookReturnedDto?> WasBookReturned(long userId, long bookId);
 }

@@ -14,6 +14,6 @@ internal class NotifyUsersJob
 
     public async Task SendCommandAsync()
     {
-        await _mediat.Send(new NotifyUsersPastReturnTimeCommand());
+        await _mediat.Send(new NotifyUsersCommand());
     }
 }

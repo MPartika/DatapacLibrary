@@ -18,4 +18,17 @@ internal static class LoansMapper
             Title= userBook.Book?.Title ?? "",
         };
     }
+
+     public static WasBookReturnedDto ToWasBookReturnedDto(this UserBook userBook)
+    {
+        return new WasBookReturnedDto
+        {
+            LoanId = userBook.Id,
+            Name = userBook.User?.Name ?? "",
+            Email = userBook.User?.Email ?? "",
+            Title= userBook.Book?.Title ?? "",
+            Author = userBook.Book?.Author ?? "",
+            WasReturned = userBook.Returned
+        };
+    }
 }

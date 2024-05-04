@@ -14,5 +14,6 @@ public class ReturnBookCommand : IRequest
     public long BookId { get; set; }
 }
 
-public class NotifyUsersPastReturnTimeCommand : IRequest;
+
+public class NotifyUsersCommand : IRequest;
 
