@@ -25,7 +25,7 @@ public static class ConfigureServices
 
     public static IServiceCollection AddDatabaseContext(this IServiceCollection services)
     {
-        services.AddDbContext<LibraryDbContext>();
+        services.AddDbContext<LibraryDbContext>(ServiceLifetime.Scoped);
         return services;
     }
 }

@@ -16,6 +16,13 @@ public class BookLoanController : Controller
         _mediat = mediat;
     }
 
+    /// <summary>
+    /// Creates Loan For book It book will be unavailable 
+    /// </summary>
+    /// <param name="command"></param>
+    /// <remarks>
+    /// Sample request: {"UserId": 1, "BookId": 1 }
+    /// </remarks>
     [HttpPost("[action]")]
     public async Task<IActionResult> CreateLoan([FromBody] CreateNewLoanCommand command)
     {
@@ -23,6 +30,13 @@ public class BookLoanController : Controller
         return Created();
     }
 
+    /// <summary>
+    /// Makes book available 
+    /// </summary>
+    /// <param name="command"></param>
+    /// <remarks>
+    /// Sample request: {"UserId": 1, "BookId": 1 }
+    /// </remarks>
     [HttpPost("[action]")]
     public async Task<IActionResult> ReturnBook([FromBody] ReturnBookCommand command)
     {

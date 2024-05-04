@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.OpenApi.Models;
 
 namespace DatapacLibrary.Web;
@@ -37,6 +38,8 @@ public static class ConfigureSwagger
                     }
             }
           );
+      var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+      opt.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
     });
     return services;
   }

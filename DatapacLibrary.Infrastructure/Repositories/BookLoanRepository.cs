@@ -31,7 +31,7 @@ internal class BookLoanRepository : IBookLoanRepository
         return await _dbContext.Books.AnyAsync(b => b.Id == bookId && (b.UserBooks == null || !b.UserBooks.Any(x => !x.Returned)));
     }
 
-    public async Task<IEnumerable<LoanWarningDto>> GetLoansPastReturnTimeAsync()
+    public async Task<IList<LoanWarningDto>> GetLoansPastReturnTimeAsync()
     {
         return await _dbContext.UserBooks
             .Where(x => x.ValidUntil <= DateTime.UtcNow && !x.Returned)

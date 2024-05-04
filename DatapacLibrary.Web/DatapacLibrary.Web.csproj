@@ -22,5 +22,10 @@
     <ProjectReference Include="..\DatapacLibrary.Infrastructure\DatapacLibrary.Infrastructure.csproj" />
     <ProjectReference Include="..\DatapacLibrary.ApplicationCore\DatapacLibrary.ApplicationCore.csproj" />
   </ItemGroup>
+  
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
 
 </Project>

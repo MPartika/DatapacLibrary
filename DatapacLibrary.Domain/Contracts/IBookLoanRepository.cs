@@ -22,7 +22,7 @@ public  interface IBookLoanRepository : IDependency
     /// Get All loans that are past the valid lending period
     /// </summary>
     /// <returns>List of users that should be notified</returns>
-    Task<IEnumerable<LoanWarningDto>> GetLoansPastReturnTimeAsync();
+    Task<IList<LoanWarningDto>> GetLoansPastReturnTimeAsync();
 
     /// <summary>
     /// Will mark loan as returned making the book once again available
