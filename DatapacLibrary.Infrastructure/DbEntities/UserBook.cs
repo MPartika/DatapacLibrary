@@ -7,7 +7,7 @@ public class UserBook : IDbEntity
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
+    public long Id { get; set; }
     public long UserId { get; set; }
     public long BookId { get; set; }
     public DateTime ValidUntil { get; set; }

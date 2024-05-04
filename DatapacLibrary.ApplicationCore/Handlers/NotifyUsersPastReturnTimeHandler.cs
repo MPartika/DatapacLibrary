@@ -18,6 +18,11 @@ public class NotifyUsersPastReturnTimeHandler : IRequestHandler<NotifyUsersPastR
     public async Task Handle(NotifyUsersPastReturnTimeCommand request, CancellationToken cancellationToken)
     {
         var notReturnedLoans = (await _repository.GetLoansPastReturnTimeAsync()).ToList();
-        notReturnedLoans.ForEach(x =>  _service.SendEmailNotificationToUser(x.Name, x.Email, x.Title, x.ValidUntil));
+
+        notReturnedLoans.ForEach(async x =>
+        {
+            await _service.SendEmailNotificationToUser(x.Name, x.Email, x.Title, x.ValidUntil);
+            await _repository.ExtendValidUnitByDays(x.LoanId, 2);
+        });
     }
 }

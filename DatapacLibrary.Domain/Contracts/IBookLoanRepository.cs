@@ -30,4 +30,11 @@ public  interface IBookLoanRepository : IDependency
     /// <param name="userId">User's Id</param>
     /// <param name="bookId">Book's Id</param>
     Task ReturnBookAsync(long userId, long bookId);
+    /// <summary>
+    /// Change valid until date by adding number of days
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="numberOfDays"></param>
+    /// <returns></returns>
+    Task ExtendValidUnitByDays(long id, short numberOfDays);
 }

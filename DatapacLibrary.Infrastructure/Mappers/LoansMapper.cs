@@ -9,6 +9,7 @@ internal static class LoansMapper
     {
         return new LoanWarningDto
         {
+            LoanId = userBook.Id,
             UserId = userBook.UserId,
             BookId = userBook.BookId,
             Name = userBook.User?.Name ?? "",

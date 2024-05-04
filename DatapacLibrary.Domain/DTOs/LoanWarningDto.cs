@@ -2,6 +2,7 @@ namespace DatapacLibrary.Domain.DataTransferObjects;
 
 public class LoanWarningDto
 {
+    public long LoanId { get; set; }
     public long UserId { get; set; }
     public long BookId { get; set; }
     public required string Name { get; set;}    

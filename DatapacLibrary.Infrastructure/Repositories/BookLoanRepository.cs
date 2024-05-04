@@ -34,7 +34,7 @@ internal class BookLoanRepository : IBookLoanRepository
     public async Task<IEnumerable<LoanWarningDto>> GetLoansPastReturnTimeAsync()
     {
         return await _dbContext.UserBooks
-            .Where(x => x.ValidUntil <= DateTime.UtcNow)
+            .Where(x => x.ValidUntil <= DateTime.UtcNow && !x.Returned)
             .Select(x => x.ToLoanWarningDto())
             .ToListAsync();
     }
@@ -49,5 +49,13 @@ internal class BookLoanRepository : IBookLoanRepository
 
         await _dbContext.SaveChangesAsync();
 
-    }  
+    } 
+
+    public async Task ExtendValidUnitByDays(long id, short numberOfDays) 
+    {
+        var loan = await _dbContext.UserBooks.SingleAsync(x => x.Id == id);
+        loan.ValidUntil = DateTime.UtcNow.AddDays(numberOfDays);
+
+        _dbContext.SaveChanges();
+    }
 }
