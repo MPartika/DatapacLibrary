@@ -17,11 +17,12 @@ public class BookLoanController : Controller
         _mediat = mediat;
     }
     
-    // <summary>
-    /// Check if loan exists if no returns null and if yes returns object 
+    /// <summary>
+    /// Check if book was returned
     /// </summary>
-    /// <param name="userId"></param>
-    /// /// <param name="bookId"></param>
+    /// <param name="userId" example="1"></param>
+    /// <param name="bookId" example="1"></param>
+    /// <returns></returns>
     [HttpGet("user/{userId:long}/book/{bookId:Long}")]
     public async Task<IActionResult> WasBookReturned(long userId, long bookId)
     {
