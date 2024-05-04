@@ -1,13 +1,11 @@
 using DatapacLibrary.Infrastructure.Repositories;
 using DatapacLibrary.Infrastructure;
-using NUnit.Framework;
 using Microsoft.EntityFrameworkCore;
 using DatapacLibrary.Infrastructure.DbEntities;
 using DatapacLibrary.Domain;
 
 namespace DatapacLibrary.Test;
 
-[TestFixture]
 public class TestUserRepository
 {
     private LibraryDbContext _dbContext;

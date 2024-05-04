@@ -15,6 +15,6 @@ public class CreateNewLoanHandler : IRequestHandler<CreateNewLoanCommand>
 
     public async Task Handle(CreateNewLoanCommand request, CancellationToken cancellationToken)
     {
-        await _repository.CreateNewLoan(request.UserId, request.BookId);
+        await _repository.CreateNewLoanAsync(request.UserId, request.BookId);
     }
 }

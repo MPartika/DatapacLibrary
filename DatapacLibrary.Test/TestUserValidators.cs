@@ -1,6 +1,5 @@
 using DatapacLibrary.ApplicationCore.Commands;
 using DatapacLibrary.ApplicationCore.Validators;
-using NUnit.Framework;
 
 namespace DatapacLibrary.Test;
 

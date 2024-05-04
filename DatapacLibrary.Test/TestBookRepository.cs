@@ -4,11 +4,9 @@ using DatapacLibrary.Infrastructure.DbEntities;
 using DatapacLibrary.Infrastructure.Mappers;
 using DatapacLibrary.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
 
 namespace DatapacLibrary.Test;
 
-[TestFixture]
 public class TestBookRepository
 {
     private LibraryDbContext _dbContext;

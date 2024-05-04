@@ -22,4 +22,11 @@ public class BookLoanController : Controller
         await _mediat.Send(command);
         return Created();
     }
+
+    [HttpPost("[action]")]
+    public async Task<IActionResult> ReturnBook([FromBody] ReturnBookCommand command)
+    {
+        await _mediat.Send(command);
+        return Accepted();
+    }
 }

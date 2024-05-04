@@ -19,5 +19,6 @@ public class User : IDbEntity
     public DateTime Created { get; set; }
     public DateTime Updated { get; set; }
 
-    public ICollection<UserBook?>? UserBooks { get; set; }
+    #pragma warning disable CS8618
+    public ICollection<UserBook> UserBooks { get; set; }
 }

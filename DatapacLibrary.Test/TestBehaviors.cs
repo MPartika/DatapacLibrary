@@ -1,7 +1,6 @@
 using DatapacLibrary.ApplicationCore.Decorators;
 using FluentValidation;
 using FluentValidation.Results;
-using NUnit.Framework;
 using MediatR;
 using Moq;
 

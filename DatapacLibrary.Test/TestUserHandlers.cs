@@ -5,7 +5,6 @@ using DatapacLibrary.Domain.Contracts;
 using DatapacLibrary.Domain.DataTransferObjects;
 using Microsoft.Extensions.Configuration;
 using Moq;
-using NUnit.Framework;
 
 namespace DatapacLibrary.Test;
 

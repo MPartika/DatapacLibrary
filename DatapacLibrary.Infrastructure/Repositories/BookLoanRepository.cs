@@ -15,15 +15,14 @@ internal class BookLoanRepository : IBookLoanRepository
         _dbContext = dbContext;
     }
 
-    public async Task CreateNewLoan(long userId, long bookId)
+    public async Task CreateNewLoanAsync(long userId, long bookId)
     {
         if (!await _dbContext.Books.AnyAsync(x => x.Id == bookId))
             throw new ArgumentException("Book not found", "BookId");
         if (!await _dbContext.Users.AnyAsync(x => x.Id == userId))
             throw new ArgumentException("User not found", "UserId");
-        if (!await IsBookAvailable(bookId))
 
-        _dbContext.Add(new UserBook{UserId = userId, BookId = bookId});
+        _dbContext.Add(new UserBook{UserId = userId, BookId = bookId, Returned = false, ValidUntil = DateTime.UtcNow.AddDays(7)});
         _dbContext.SaveChanges();
     }
 
@@ -32,7 +31,7 @@ internal class BookLoanRepository : IBookLoanRepository
         return await _dbContext.Books.AnyAsync(b => b.Id == bookId && (b.UserBooks == null || !b.UserBooks.Any(x => !x.Returned)));
     }
 
-    public async Task<IEnumerable<LoanWarningDto>> GetLoansPastDueTime()
+    public async Task<IEnumerable<LoanWarningDto>> GetLoansPastReturnTimeAsync()
     {
         return await _dbContext.UserBooks
             .Where(x => x.ValidUntil <= DateTime.UtcNow)
@@ -40,7 +39,7 @@ internal class BookLoanRepository : IBookLoanRepository
             .ToListAsync();
     }
 
-    public async Task ReturnBook(long userId, long bookId)
+    public async Task ReturnBookAsync(long userId, long bookId)
     {
         var loan = await _dbContext.UserBooks
             .Where(x => x.UserId == userId && x.BookId == bookId && !x.Returned)

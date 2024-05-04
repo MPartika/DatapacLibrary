@@ -15,7 +15,8 @@ public class UserBook : IDbEntity
     public DateTime Created { get; set; }
     public DateTime Updated { get; set; }
 
-    public User? User { get; set; }
+    #pragma warning disable CS8618
+    public User User { get; set; }
     [ForeignKey(nameof(BookId))]
-    public Book? Book { get; set; }
+    public Book Book { get; set; }
 }

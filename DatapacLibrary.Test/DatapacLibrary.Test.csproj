@@ -22,5 +22,8 @@
     <ProjectReference Include="..\DatapacLibrary.ApplicationCore\DatapacLibrary.ApplicationCore.csproj" />
     <ProjectReference Include="..\DatapacLibrary.Infrastructure\DatapacLibrary.Infrastructure.csproj" />
   </ItemGroup>
-
+  
+  <ItemGroup>
+    <Using Include="NUnit.Framework" />
+  </ItemGroup>
 </Project>
