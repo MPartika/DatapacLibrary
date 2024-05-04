@@ -34,7 +34,7 @@ public class TestUserRepository
         _dbContext.SaveChanges();
         var user = await repository.GetUserAsync(_user.Name);
 
-        Assert.IsNotNull(user);
+        Assert.That(user, Is.Not.Null);
     }
 
     [Test]
@@ -44,7 +44,7 @@ public class TestUserRepository
         await repository.CreateUserAsync(_user.Name, "", Array.Empty<byte>(), Array.Empty<byte>());
 
         var user = _dbContext.Users.FirstOrDefault(x => x.Name == _user.Name);
-        Assert.IsNotNull(user);
+        Assert.That(user, Is.Not.Null);
     }
 
     [Test]
@@ -56,7 +56,7 @@ public class TestUserRepository
 
         await repository.UpdateUserAsync(_user.Id, null, "test", null, null);
 
-        Assert.True(_dbContext.Users.Any(x => x.Email == "test"));
+        Assert.That(_dbContext.Users.Any(x => x.Email == "test"), Is.True);
     }
 
     [Test]
@@ -68,7 +68,7 @@ public class TestUserRepository
 
         await repository.UpdateUserAsync(_user.Id, "test", null, null, null);
 
-        Assert.True(_dbContext.Users.Any(x => x.Name == "test"));
+        Assert.That(_dbContext.Users.Any(x => x.Name == "test"), Is.True);
     }
 
     [Test]
@@ -82,7 +82,7 @@ public class TestUserRepository
 
         await repository.UpdateUserAsync(_user.Id, "test", null, password, salt);
 
-        Assert.True(_dbContext.Users.Any(x => x.Password == password));
+        Assert.That(_dbContext.Users.Any(x => x.Password == password), Is.True);
     }
 
     [Test]
@@ -94,6 +94,6 @@ public class TestUserRepository
 
         await repository.DeleteUserAsync(_user.Id);
 
-        Assert.False(_dbContext.Users.Any(x => x.Id == _user.Id));
+        Assert.That(_dbContext.Users.Any(x => x.Id == _user.Id), Is.False);
     }
 }

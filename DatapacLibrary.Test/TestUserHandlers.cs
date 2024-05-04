@@ -31,6 +31,6 @@ public class TestUserHandlers
 
         var handler = new AuthenticateUserHandler(_userRepositoryMock.Object, configuration);
         var result = await handler.Handle(command, CancellationToken.None);
-        Assert.IsNotEmpty(result);
+        Assert.That(result, Is.Not.Empty);
     }
 }

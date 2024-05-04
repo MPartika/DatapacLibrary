@@ -35,7 +35,7 @@ public class TestBookRepository
         _dbContext.SaveChanges();
         var book = await repository.GetBookAsync(_book.Id);
 
-        Assert.IsNotNull(book);
+        Assert.That(book, Is.Not.Null);
     }
 
     [Test]
@@ -53,7 +53,7 @@ public class TestBookRepository
             });
 
         var book = _dbContext.Books.FirstOrDefault(x => x.Title == _book.Title);
-        Assert.IsNotNull(book);
+        Assert.That(book, Is.Not.Null);
     }
 
     [Test]
@@ -66,7 +66,7 @@ public class TestBookRepository
 
         await repository.UpdateBookAsync(new PatchBookDto { Id = _book.Id, Title = "test" });
 
-        Assert.True(_dbContext.Books.Any(x => x.Title == "test"));
+        Assert.That(_dbContext.Books.Any(x => x.Title == "test"), Is.True);
     }
 
     [Test]
@@ -78,7 +78,7 @@ public class TestBookRepository
 
         await repository.UpdateBookAsync(new PatchBookDto { Id = _book.Id, Author = "test" });
 
-        Assert.True(_dbContext.Books.Any(x => x.Author == "test"));
+        Assert.That(_dbContext.Books.Any(x => x.Author == "test"), Is.True);
     }
 
     [Test]
@@ -91,7 +91,7 @@ public class TestBookRepository
 
         await repository.UpdateBookAsync(new PatchBookDto { Id = _book.Id, ISBN = "test" });
 
-        Assert.True(_dbContext.Books.Any(x => x.ISBN == "test"));
+        Assert.That(_dbContext.Books.Any(x => x.ISBN == "test"), Is.True);
     }
 
     [Test]
@@ -103,7 +103,7 @@ public class TestBookRepository
 
         await repository.UpdateBookAsync(new PatchBookDto { Id = _book.Id, Publisher = "test" });
 
-        Assert.True(_dbContext.Books.Any(x => x.Publisher == "test"));
+        Assert.That(_dbContext.Books.Any(x => x.Publisher == "test"), Is.True);
     }
 
     [Test]
@@ -115,7 +115,7 @@ public class TestBookRepository
 
         await repository.UpdateBookAsync(new PatchBookDto { Id = _book.Id, PublicationYear = 3 });
 
-        Assert.True(_dbContext.Books.Any(x => x.PublicationYear == 3));
+        Assert.That(_dbContext.Books.Any(x => x.PublicationYear == 3), Is.True);
     }
 
     [Test]
@@ -127,6 +127,6 @@ public class TestBookRepository
 
         await repository.DeleteBookAsync(_book.Id);
 
-        Assert.False(_dbContext.Books.Any(x => x.Id == _book.Id));
+        Assert.That(_dbContext.Books.Any(x => x.Id == _book.Id), Is.False);
     }
 }

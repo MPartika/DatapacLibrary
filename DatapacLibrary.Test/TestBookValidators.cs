@@ -10,7 +10,7 @@ public class TestBookValidators
     {
         var deleteBookValidator = new DeleteBookValidator();
         var validationResult = deleteBookValidator.Validate(new DeleteBookCommand {Id = -3});
-        Assert.IsNotEmpty(validationResult.Errors);
+        Assert.That(validationResult.Errors, Is.Not.Empty);
     }
 
     [Test]
@@ -24,9 +24,11 @@ public class TestBookValidators
         
         var createValidationResult = createBookValidator.Validate(createCommand);
         var updateValidationResult = updateBookValidator.Validate(updateCommand);
-        
-        Assert.IsTrue(createValidationResult.Errors.Any(x => x.ErrorMessage == exceptionMessage));
-        Assert.IsTrue(updateValidationResult.Errors.Any(x => x.ErrorMessage == exceptionMessage)); 
+        Assert.Multiple(() =>
+        {
+            Assert.That(createValidationResult.Errors.Any(x => x.ErrorMessage == exceptionMessage), Is.True);
+            Assert.That(updateValidationResult.Errors.Any(x => x.ErrorMessage == exceptionMessage), Is.True);
+        });
     }
 
     [Test]
@@ -40,9 +42,11 @@ public class TestBookValidators
         
         var createValidationResult = createBookValidator.Validate(createCommand);
         var updateValidationResult = updateBookValidator.Validate(updateCommand);
-        
-        Assert.IsTrue(createValidationResult.Errors.Any(x => x.ErrorMessage == exceptionMessage));
-        Assert.IsTrue(updateValidationResult.Errors.Any(x => x.ErrorMessage == exceptionMessage)); 
+        Assert.Multiple(() =>
+        {
+            Assert.That(createValidationResult.Errors.Any(x => x.ErrorMessage == exceptionMessage), Is.True);
+            Assert.That(updateValidationResult.Errors.Any(x => x.ErrorMessage == exceptionMessage), Is.True);
+        });
     }
 
     [Test]
@@ -56,9 +60,11 @@ public class TestBookValidators
         
         var createValidationResult = createBookValidator.Validate(createCommand);
         var updateValidationResult = updateBookValidator.Validate(updateCommand);
-        
-        Assert.IsTrue(createValidationResult.Errors.Any(x => x.ErrorMessage == exceptionMessage));
-        Assert.IsTrue(updateValidationResult.Errors.Any(x => x.ErrorMessage == exceptionMessage)); 
+        Assert.Multiple(() =>
+        {
+            Assert.That(createValidationResult.Errors.Any(x => x.ErrorMessage == exceptionMessage), Is.True);
+            Assert.That(updateValidationResult.Errors.Any(x => x.ErrorMessage == exceptionMessage), Is.True);
+        });
     }
 
     [Test]
@@ -72,8 +78,10 @@ public class TestBookValidators
         
         var createValidationResult = createBookValidator.Validate(createCommand);
         var updateValidationResult = updateBookValidator.Validate(updateCommand);
-        
-        Assert.IsTrue(createValidationResult.Errors.Any(x => x.ErrorMessage == exceptionMessage));
-        Assert.IsTrue(updateValidationResult.Errors.Any(x => x.ErrorMessage == exceptionMessage)); 
+        Assert.Multiple(() =>
+        {
+            Assert.That(createValidationResult.Errors.Any(x => x.ErrorMessage == exceptionMessage), Is.True);
+            Assert.That(updateValidationResult.Errors.Any(x => x.ErrorMessage == exceptionMessage), Is.True);
+        });
     }
 }

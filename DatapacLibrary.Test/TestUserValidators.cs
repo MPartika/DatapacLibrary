@@ -15,8 +15,11 @@ public class TestUserValidators
         var updateCommand = new UpdateUserCommand { Password =  password};
         var createValidationResult = createValidator.Validate(createCommand);
         var updateValidationResult = updateValidator.Validate(updateCommand);
-        Assert.IsEmpty(createValidationResult.Errors);
-        Assert.IsEmpty(updateValidationResult.Errors);
+        Assert.Multiple(() =>
+        {
+            Assert.That(createValidationResult.Errors, Is.Empty);
+            Assert.That(updateValidationResult.Errors, Is.Empty);
+        });
     }
 
     [Test]
@@ -29,10 +32,16 @@ public class TestUserValidators
         var updateCommand = new UpdateUserCommand { Password =  password};
         var createValidationResult = createValidator.Validate(createCommand);
         var updateValidationResult = updateValidator.Validate(updateCommand);
-        Assert.IsNotEmpty(createValidationResult.Errors);
-        Assert.IsNotEmpty(updateValidationResult.Errors);
-        Assert.IsTrue(createValidationResult.Errors.Any(x => x.ErrorMessage == "Your password length must be at least 8."));
-        Assert.IsTrue(updateValidationResult.Errors.Any(x => x.ErrorMessage == "Your password length must be at least 8."));
+        Assert.Multiple(() =>
+        {
+            Assert.That(createValidationResult.Errors, Is.Not.Empty);
+            Assert.That(updateValidationResult.Errors, Is.Not.Empty);
+        });
+        Assert.Multiple(() =>
+        {
+            Assert.That(createValidationResult.Errors.Any(x => x.ErrorMessage == "Your password length must be at least 8."), Is.True);
+            Assert.That(updateValidationResult.Errors.Any(x => x.ErrorMessage == "Your password length must be at least 8."), Is.True);
+        });
     }
 
     [Test]
@@ -45,10 +54,16 @@ public class TestUserValidators
         var updateCommand = new UpdateUserCommand { Password =  password};
         var createValidationResult = createValidator.Validate(createCommand);
         var updateValidationResult = updateValidator.Validate(updateCommand);
-        Assert.IsNotEmpty(createValidationResult.Errors);
-        Assert.IsNotEmpty(updateValidationResult.Errors);
-        Assert.IsTrue(createValidationResult.Errors.Any(x => x.ErrorMessage == "Your password must contain at least one lowercase letter."));
-        Assert.IsTrue(updateValidationResult.Errors.Any(x => x.ErrorMessage == "Your password must contain at least one lowercase letter."));
+        Assert.Multiple(() =>
+        {
+            Assert.That(createValidationResult.Errors, Is.Not.Empty);
+            Assert.That(updateValidationResult.Errors, Is.Not.Empty);
+        });
+        Assert.Multiple(() =>
+        {
+            Assert.That(createValidationResult.Errors.Any(x => x.ErrorMessage == "Your password must contain at least one lowercase letter."), Is.True);
+            Assert.That(updateValidationResult.Errors.Any(x => x.ErrorMessage == "Your password must contain at least one lowercase letter."), Is.True);
+        });
     }
 
     [Test]
@@ -61,10 +76,16 @@ public class TestUserValidators
         var updateCommand = new UpdateUserCommand { Password =  password};
         var createValidationResult = createValidator.Validate(createCommand);
         var updateValidationResult = updateValidator.Validate(updateCommand);
-        Assert.IsNotEmpty(createValidationResult.Errors);
-        Assert.IsNotEmpty(updateValidationResult.Errors);
-        Assert.IsTrue(createValidationResult.Errors.Any(x => x.ErrorMessage == "Your password must contain at least one uppercase letter."));
-        Assert.IsTrue(updateValidationResult.Errors.Any(x => x.ErrorMessage == "Your password must contain at least one uppercase letter."));
+        Assert.Multiple(() =>
+        {
+            Assert.That(createValidationResult.Errors, Is.Not.Empty);
+            Assert.That(updateValidationResult.Errors, Is.Not.Empty);
+        });
+        Assert.Multiple(() =>
+        {
+            Assert.That(createValidationResult.Errors.Any(x => x.ErrorMessage == "Your password must contain at least one uppercase letter."), Is.True);
+            Assert.That(updateValidationResult.Errors.Any(x => x.ErrorMessage == "Your password must contain at least one uppercase letter."), Is.True);
+        });
     }
 
     [Test]
@@ -77,8 +98,11 @@ public class TestUserValidators
         var updateCommand = new UpdateUserCommand { Email="Test" };
         var createValidationResult = createValidator.Validate(createCommand);
         var updateValidationResult = updateValidator.Validate(updateCommand);
-        Assert.IsTrue(createValidationResult.Errors.Any(x => x.ErrorMessage == "User email must be valid"));
-        Assert.IsTrue(updateValidationResult.Errors.Any(x => x.ErrorMessage == "User email must be valid"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(createValidationResult.Errors.Any(x => x.ErrorMessage == "User email must be valid"), Is.True);
+            Assert.That(updateValidationResult.Errors.Any(x => x.ErrorMessage == "User email must be valid"), Is.True);
+        });
     }
 
     [Test]
@@ -87,6 +111,6 @@ public class TestUserValidators
         var updateValidator = new UpdateUserValidator();
         var updateCommand = new UpdateUserCommand { Name="" };
         var updateValidationResult = updateValidator.Validate(updateCommand);
-        Assert.IsTrue(updateValidationResult.Errors.Any(x => x.ErrorMessage == "User name cannot be empty"));
+        Assert.That(updateValidationResult.Errors.Any(x => x.ErrorMessage == "User name cannot be empty"), Is.True);
     }
 }
