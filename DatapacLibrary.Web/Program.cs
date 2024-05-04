@@ -6,6 +6,7 @@ using Serilog;
 using Serilog.Events;
 using System.Text.Json;
 using System.Text;
+using Hangfire;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
@@ -18,6 +19,8 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
+
+
 builder.Host.UseSerilog();
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -29,6 +32,8 @@ builder.Services.AddAuthentication(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureSwaggerGen();
 builder.Services.AddControllers();
+builder.Services.AddHangFire();
+
 
 var app = builder.Build();
 
@@ -65,7 +70,7 @@ app.UseEndpoints(endpoints =>
     _ = endpoints.MapControllers();
 });
 
-
+app.UseHangfireDashboard();
 
 app.UseHttpsRedirection();
 
@@ -75,6 +80,9 @@ using (var scope = app.Services.CreateScope())
 
     db.Database.Migrate();
 }
+
+ConfigureHangFire.EnqueueNotifyJob();
+
 
 app.Run();
 
