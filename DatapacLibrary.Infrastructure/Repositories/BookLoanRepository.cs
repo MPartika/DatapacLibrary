@@ -34,6 +34,8 @@ internal class BookLoanRepository : IBookLoanRepository
     public async Task<IList<LoanWarningDto>> GetLoansPastReturnTimeAsync()
     {
         return await _dbContext.UserBooks
+            .Include(x => x.User)
+            .Include(x => x.Book)
             .Where(x => x.ValidUntil <= DateTime.UtcNow.AddDays(-1) && !x.Returned)
             .Select(x => x.ToLoanWarningDto())
             .ToListAsync();

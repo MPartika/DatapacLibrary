@@ -17,12 +17,11 @@ internal class EmailService : IEmailService
             mailMessage.Subject = bookTitle;
             mailMessage.Body = new TextPart("plain")
             {
-                Text = $"Book should be here by {returnTime.ToLocalTime():dd.MM.yyyy} book not!!!! You return book NOW!!!",
+                Text = $"Book should be here by {returnTime.ToLocalTime():dd.MM.yyyy}!!!! You return book!!!",
             };
 
             using var smtpClient = new SmtpClient();
-            await smtpClient.ConnectAsync("smtp.gmail.com", 465, true);
-            await smtpClient.AuthenticateAsync("user", "password");
+            await smtpClient.ConnectAsync("localhost", 1025);
             await smtpClient.SendAsync(mailMessage);
             await smtpClient.DisconnectAsync(true);
         }

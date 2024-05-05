@@ -18,7 +18,7 @@ public class BookLoanController : Controller
     }
     
     /// <summary>
-    /// Check if book was returned
+    /// Check if a book was returned
     /// </summary>
     /// <param name="userId" example="1"></param>
     /// <param name="bookId" example="1"></param>
