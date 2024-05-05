@@ -22,6 +22,7 @@ internal class EmailService : IEmailService
 
             using var smtpClient = new SmtpClient();
             await smtpClient.ConnectAsync("localhost", 1025);
+            await smtpClient.AuthenticateAsync("User", "Password");
             await smtpClient.SendAsync(mailMessage);
             await smtpClient.DisconnectAsync(true);
         }
